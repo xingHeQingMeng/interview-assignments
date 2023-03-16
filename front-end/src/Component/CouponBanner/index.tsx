@@ -141,7 +141,7 @@ const useText: () => string[] = () => {
   useEffect(() => {
     window.addEventListener('resize', watchViewPort);
     return () => window.removeEventListener('resize', watchViewPort);
-  }, []);
+  }, [watchViewPort]);
   return [text1, text2, text3];
 };
 const CouponBanner: React.FC = function () {
