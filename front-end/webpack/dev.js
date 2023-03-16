@@ -14,6 +14,24 @@ module.exports = merge(baseConfig, {
     static: {
       directory: path.resolve(__dirname, '../public'),
     },
+    setupMiddlewares: (middlewares, devServer) => {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+
+      middlewares.unshift({
+        name: 'user-info',
+
+        path: '/api/*',
+        middleware: (req, res) => {
+          const cbPath = './' + req._parsedUrl.path.slice(4) + '.js';
+          const cb = require(path.resolve(__dirname, '../mock', cbPath));
+          res.send(cb());
+        },
+      });
+
+      return middlewares;
+    },
   },
   plugins: [new ReactRefreshWebpackPlugin()],
 });
