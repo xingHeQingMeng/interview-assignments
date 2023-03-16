@@ -124,19 +124,16 @@ const useText: () => string[] = () => {
         .then((res) => res.json())
         .then((res) => {
           const code = res.languageCode;
-          if (code === 1) {
-            setLanguage(LANGUAGE.cn);
-          } else {
-            setLanguage(LANGUAGE.en);
-          }
+          const key = code === 1 ? LANGUAGE.cn : LANGUAGE.en;
+          setLanguage(key);
           if (window.innerWidth > 768) {
-            setText1(text[language][SCREEN.large][0]);
-            setText2(text[language][SCREEN.large][1]);
-            setText3(text[language][SCREEN.large][2]);
+            setText1(text[key][SCREEN.large][0]);
+            setText2(text[key][SCREEN.large][1]);
+            setText3(text[key][SCREEN.large][2]);
           } else {
-            setText1(text[language][SCREEN.small][0]);
-            setText2(text[language][SCREEN.small][1]);
-            setText3(text[language][SCREEN.small][2]);
+            setText1(text[key][SCREEN.small][0]);
+            setText2(text[key][SCREEN.small][1]);
+            setText3(text[key][SCREEN.small][2]);
           }
         });
     }
