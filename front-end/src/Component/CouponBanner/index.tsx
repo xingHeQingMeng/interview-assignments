@@ -28,16 +28,11 @@ const text = {
   },
 };
 
-function useCountDown(): { hour: number; minute: number; second: number } {
-  const day = new Date().getDay();
-
-  const endTime = useMemo<number>(() => {
-    return new Date(
-      new Date(new Date().toLocaleDateString()).getTime() +
-        24 * 60 * 60 * 1000 -
-        1
-    ).getTime();
-  }, [day]); // 当天23:59
+function useCountDown(endTime: number): {
+  hour: number;
+  minute: number;
+  second: number;
+} {
   const { initHour, initMinute, initSecond } = useMemo<{
     initHour: number;
     initMinute: number;
@@ -84,7 +79,16 @@ function useCountDown(): { hour: number; minute: number; second: number } {
   };
 }
 const CountDown: React.FC = function () {
-  const { hour, minute, second } = useCountDown();
+  const day = new Date().getDay();
+
+  const endTime = useMemo<number>(() => {
+    return new Date(
+      new Date(new Date().toLocaleDateString()).getTime() +
+        24 * 60 * 60 * 1000 -
+        1
+    ).getTime();
+  }, [day]); // 当天23:59
+  const { hour, minute, second } = useCountDown(endTime);
   return (
     <div className={Styles.countDown}>
       Ends in
